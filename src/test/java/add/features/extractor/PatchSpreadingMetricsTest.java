@@ -1,9 +1,12 @@
 package add.features.extractor;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import add.entities.Metrics;
 import add.main.Config;
 import add.utils.TestUtils;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,18 +1,20 @@
 package add.features.diffanalyzer;
 
-import add.main.Config;
-import add.main.Constants;
-import add.utils.TestUtils;
-import org.junit.Test;
-
-import java.util.*;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by fermadeiral
- */
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
+import add.main.Config;
+import add.main.Constants;
+import add.utils.TestUtils;
+
 public class JGitBasedDiffAnalyzerTest {
 
     @Test

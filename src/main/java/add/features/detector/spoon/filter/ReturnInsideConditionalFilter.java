@@ -7,9 +7,6 @@ import spoon.reflect.code.CtReturn;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.visitor.Filter;
 
-/**
- * Created by fermadeiral
- */
 public class ReturnInsideConditionalFilter implements Filter<CtReturn> {
 
     private CtElement ctElement;

@@ -1,8 +1,5 @@
 package add.entities;
 
-/**
- * Created by fermadeiral
- */
 public class Metrics extends Feature {
 
     @FeatureAnnotation(key = "nbFiles", name = "# Files")

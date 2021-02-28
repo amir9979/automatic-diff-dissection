@@ -1,16 +1,12 @@
 package add.features.detector.repairpatterns;
 
-import add.entities.RepairPatterns;
-import add.main.Config;
-import add.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by tdurieux
- *
- * Tests for the feature copyPaste
- */
+import add.entities.RepairPatterns;
+import add.main.Config;
+import add.utils.TestUtils;
+
 public class CopyPasteDetectorTest {
 
     @Test

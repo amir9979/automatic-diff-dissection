@@ -1,12 +1,9 @@
 package add.entities;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by tdurieux
- */
+import org.junit.Test;
+
 public class FeatureTest {
 
     @Test

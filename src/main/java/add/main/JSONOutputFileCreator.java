@@ -1,13 +1,10 @@
 package add.main;
 
+import java.io.FileWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileWriter;
-
-/**
- * Created by fermadeiral
- */
 public class JSONOutputFileCreator {
     private static Logger LOGGER = LoggerFactory.getLogger(JSONOutputFileCreator.class);
 

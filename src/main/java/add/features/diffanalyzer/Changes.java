@@ -1,15 +1,12 @@
 package add.features.diffanalyzer;
 
-import org.eclipse.jgit.diff.Edit;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by tdurieux
- */
+import org.eclipse.jgit.diff.Edit;
+
 public class Changes {
     List<Change> oldChanges = new ArrayList<>();
     List<Change> newChanges = new ArrayList<>();

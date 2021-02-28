@@ -1,16 +1,12 @@
 package add.features.detector.repairpatterns;
 
-import add.entities.RepairPatterns;
-import add.main.Config;
-import add.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by fermadeiral
- *
- * Tests for the features condBlockOthersAdd, condBlockRetAdd, condBlockExcAdd and condBlockRem
- */
+import add.entities.RepairPatterns;
+import add.main.Config;
+import add.utils.TestUtils;
+
 public class ConditionalBlockDetectorTest {
 
     @Test

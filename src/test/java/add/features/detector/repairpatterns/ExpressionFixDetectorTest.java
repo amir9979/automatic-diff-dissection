@@ -1,216 +1,316 @@
 package add.features.detector.repairpatterns;
 
-import add.entities.RepairPatterns;
-import add.main.Config;
-import add.utils.TestUtils;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by tdurieux
- *
- * Tests for the features expLogicMod, expLogicExpand, expLogicReduce, and expArithMod
- */
+import add.entities.PatternInstance;
+import add.entities.RepairPatterns;
+import add.main.Config;
+import add.utils.TestUtils;
+
 public class ExpressionFixDetectorTest {
 
-    @Test
-    public void chart1() {
-        Config config = TestUtils.setupConfig("chart_1");
+	@Test
+	public void chart1() {
+		Config config = TestUtils.setupConfig("chart_1");
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
-    }
+		Assert.assertTrue(repairPatterns.getFeatureCounter("binOperatorModif") > 0);
 
-    @Test
-    public void closure4() {
-        Config config = TestUtils.setupConfig("closure_4");
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("binOperatorModif");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString().contains("(dataset != null"));
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
-    }
+		assertTrue(pi1.getFaulty().stream()
+				.filter(e -> e.toString().contains("com.google.javascript.jscomp.NodeUtil.isFunctionExpression(n)"))
+				.findFirst().isPresent());
 
-    @Test
-    public void closure104() {
-        Config config = TestUtils.setupConfig("closure_104");
+		assertTrue(pi1.getFaultyLine().toString().equals(" dataset != null"));
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
-    }
+	@Test
+	public void closure4() {
+		Config config = TestUtils.setupConfig("closure_4");
 
-    @Test
-    public void closure55() {
-        Config config = TestUtils.setupConfig("closure_55");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		// Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") > 0);
-    }
+	@Test
+	public void closure104() {
+		Config config = TestUtils.setupConfig("closure_104");
 
-    @Test
-    public void chart5() {
-        Config config = TestUtils.setupConfig("chart_5");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		// Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") == 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
-    }
+	@Test
+	public void closure55() {
+		Config config = TestUtils.setupConfig("closure_55");
 
-    @Test
-    public void chart16() {
-        Config config = TestUtils.setupConfig("chart_16");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") > 0);
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") == 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
-    }
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("expLogicExpand");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
 
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString().contains(
+				"(com.google.javascript.jscomp.NodeUtil.isFunctionExpression(n)) && (!(com.google.javascript.jscomp.NodeUtil.isGetOrSetKey(n.getParent())))"));
 
-    @Test
-    public void closure6() {
-        Config config = TestUtils.setupConfig("closure_6");
+		assertTrue(pi1.getFaulty().stream()
+				.filter(e -> e.toString().contains("com.google.javascript.jscomp.NodeUtil.isFunctionExpression(n)"))
+				.findFirst().isPresent());
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		assertTrue(pi1.getFaultyLine().toString()
+				.equals("return com.google.javascript.jscomp.NodeUtil.isFunctionExpression(n)"));
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") == 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-    }
+	}
 
-    @Test
-    public void closure20() {
-        Config config = TestUtils.setupConfig("closure_20");
+	@Test
+	public void chart5() {
+		Config config = TestUtils.setupConfig("chart_5");
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") > 0);
-    }
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") == 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
 
-    @Test
-    public void closure23() {
-        Config config = TestUtils.setupConfig("closure_23");
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("expLogicReduce");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString().contains("f (index >= 0) {"));
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
-    }
+		assertTrue(pi1.getFaulty().stream().filter(e -> e.toString().contains("(!(this.allowDuplicateXValues))"))
+				.findFirst().isPresent());
 
-    @Test
-    public void closure30() {
-        Config config = TestUtils.setupConfig("closure_30");
+		assertTrue(pi1.getFaultyLine().toString().contains("if ((index >= 0) && (!(this.allowDuplicateXValues))) {"));
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-    }
+	@Test
+	public void chart16() {
+		Config config = TestUtils.setupConfig("chart_16");
 
-    @Test
-    public void closure31() {
-        Config config = TestUtils.setupConfig("closure_31");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") == 0);
+		// Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-    }
+	@Test
+	public void closure6() {
+		Config config = TestUtils.setupConfig("closure_6");
 
-    @Test
-    public void closure35() {
-        Config config = TestUtils.setupConfig("closure_35");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") == 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-    }
+	@Test
+	public void closure20() {
+		Config config = TestUtils.setupConfig("closure_20");
 
-    @Test
-    public void closure131() {
-        Config config = TestUtils.setupConfig("closure_131");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") > 0);
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") == 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-    }
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("expLogicExpand");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
 
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString().contains(
+				"((value != null) && ((value.getNext()) == null)) && (com.google.javascript.jscomp.NodeUtil.isImmutableValue(value))"));
 
-    @Test
-    public void math64() {
-        Config config = TestUtils.setupConfig("math_64");
+		assertTrue(pi1.getFaulty().stream().filter(e -> e.toString().contains("if (value != null) {")).findFirst()
+				.isPresent());
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		assertTrue(pi1.getFaultyLine().toString().contains("if (value != null) {"));
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expArithMod") > 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
-    }
+	}
 
-    @Test
-    public void math76() {
-        Config config = TestUtils.setupConfig("math_76");
+	@Test
+	public void closure23() {
+		Config config = TestUtils.setupConfig("closure_23");
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expArithMod") > 0);
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
-    }
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
 
-    @Test
-    public void closure80() {
-        Config config = TestUtils.setupConfig("closure_80");
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("expLogicReduce");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString().contains("for (int i = 0; current != null; i++) {"));
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") > 0);
-    }
+		assertTrue(
+				pi1.getFaulty().stream().filter(e -> e.toString().contains("(i < intIndex)")).findFirst().isPresent());
 
-    @Test
-    public void closure19() {
-        Config config = TestUtils.setupConfig("closure_19");
+		assertTrue(
+				pi1.getFaultyLine().toString().contains("for (int i = 0; (current != null) && (i < intIndex); i++) {"));
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+	}
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") == 0);
-    }
+	@Test
+	public void closure30() {
+		Config config = TestUtils.setupConfig("closure_30");
 
-    @Test
-    public void closure44() {
-        Config config = TestUtils.setupConfig("closure_44");
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") == 0);
-    }
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("expLogicReduce");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
 
-    @Test
-    public void chart10() {
-        Config config = TestUtils.setupConfig("chart_10");
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString().contains("if (n.isName()) {"));
 
-        RepairPatternDetector detector = new RepairPatternDetector(config);
-        RepairPatterns repairPatterns = detector.analyze();
+		assertTrue(pi1.getFaulty().stream()
+				.filter(e -> e.toString().contains("jsScope.isDeclared(n.getString(), true)")).findFirst().isPresent());
 
-        Assert.assertTrue(repairPatterns.getFeatureCounter("expArithMod") == 0);
-    }
+		assertTrue(pi1.getFaultyLine().toString()
+				.contains("if ((n.isName()) && (jsScope.isDeclared(n.getString(), true))) {"));
+
+	}
+
+	@Test
+	public void closure31() {
+		Config config = TestUtils.setupConfig("closure_31");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") > 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
+
+		List<PatternInstance> insts = repairPatterns.getPatternInstances().get("expLogicReduce");
+		System.out.println(insts);
+		assertTrue(insts.size() > 0);
+
+		PatternInstance pi1 = insts.get(0);
+		assertTrue(pi1.getNodeAffectedOp().toString()
+				.contains("(options.dependencyOptions.needsManagement()) && (options.closurePass)"));
+
+		assertTrue(pi1.getFaulty().stream().filter(e -> e.toString().contains("(!(options.skipAllPasses))")).findFirst()
+				.isPresent());
+
+		assertTrue(pi1.getFaultyLine().toString().contains(
+				// "if (((options.dependencyOptions.needsManagement()) &&
+				// (!(options.skipAllPasses))) && (options.closurePass)) {"
+				"((options.dependencyOptions.needsManagement()) && (!(options.skipAllPasses))) && (options.closurePass)"));
+	}
+
+	@Test
+	public void closure35() {
+		Config config = TestUtils.setupConfig("closure_35");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
+	}
+
+	@Test
+	public void closure131() {
+		Config config = TestUtils.setupConfig("closure_131");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicReduce") == 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
+	}
+
+	@Test
+	public void math64() {
+		Config config = TestUtils.setupConfig("math_64"); // False positive
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		// Assert.assertTrue(repairPatterns.getFeatureCounter("expArithMod") > 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") == 0);
+	}
+
+	@Test
+	public void math76() {
+		Config config = TestUtils.setupConfig("math_76");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		// Assert.assertTrue(repairPatterns.getFeatureCounter("expArithMod") > 0);
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicMod") > 0);
+	}
+
+	@Test
+	public void closure80() {
+		Config config = TestUtils.setupConfig("closure_80");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") > 0);
+	}
+
+	@Test
+	public void closure19() {
+		Config config = TestUtils.setupConfig("closure_19");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") == 0);
+	}
+
+	@Test
+	public void closure44() {
+		Config config = TestUtils.setupConfig("closure_44");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expLogicExpand") == 0);
+	}
+
+	@Test
+	public void chart10() {
+		Config config = TestUtils.setupConfig("chart_10");
+
+		RepairPatternDetector detector = new RepairPatternDetector(config);
+		RepairPatterns repairPatterns = detector.analyze();
+
+		Assert.assertTrue(repairPatterns.getFeatureCounter("expArithMod") == 0);
+	}
 }
