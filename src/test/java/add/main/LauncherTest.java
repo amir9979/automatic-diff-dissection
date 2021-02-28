@@ -1,12 +1,11 @@
 package add.main;
 
-import add.utils.TestUtils;
-import com.martiansoftware.jsap.JSAPException;
 import org.junit.Test;
 
-/**
- * Created by fermadeiral
- */
+import com.martiansoftware.jsap.JSAPException;
+
+import add.utils.TestUtils;
+
 public class LauncherTest {
 
     @Test

@@ -1,23 +1,25 @@
 package add.features.detector.spoon;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import add.features.detector.repairpatterns.RepairPatternDetector;
 import add.main.Config;
 import add.utils.TestUtils;
 import gumtree.spoon.diff.Diff;
-import gumtree.spoon.diff.operations.*;
-import org.junit.Assert;
-import org.junit.Test;
+import gumtree.spoon.diff.operations.DeleteOperation;
+import gumtree.spoon.diff.operations.InsertOperation;
+import gumtree.spoon.diff.operations.MoveOperation;
+import gumtree.spoon.diff.operations.Operation;
+import gumtree.spoon.diff.operations.UpdateOperation;
 import spoon.reflect.code.CtVariableAccess;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtVariable;
 import spoon.reflect.visitor.filter.TypeFilter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by fermadeiral
- */
 public class RepairPatternUtilsTest {
 
     @Test

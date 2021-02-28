@@ -115,3 +115,11 @@ hs_err_pid*
 # IntelliJ IDEA
 .idea/
 *.iml
+
+**/.DS_Store
+.settings
+
+# eclipse
+.project
+.classpath
+/bin/

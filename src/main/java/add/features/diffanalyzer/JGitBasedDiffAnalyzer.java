@@ -1,6 +1,12 @@
 package add.features.diffanalyzer;
 
-import add.main.Utils;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.jgit.diff.Edit;
 import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
@@ -10,16 +16,8 @@ import org.eclipse.jgit.patch.Patch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import add.main.Utils;
 
-/**
- * Created by tdurieux
- */
 public class JGitBasedDiffAnalyzer {
     private static Logger LOGGER = LoggerFactory.getLogger(JGitBasedDiffAnalyzer.class);
 

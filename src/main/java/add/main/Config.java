@@ -1,8 +1,5 @@
 package add.main;
 
-/**
- * Created by fermadeiral
- */
 public class Config {
 
     private LauncherMode launcherMode;

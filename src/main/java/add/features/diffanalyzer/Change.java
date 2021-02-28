@@ -1,8 +1,5 @@
 package add.features.diffanalyzer;
 
-/**
- * Created by tdurieux
- */
 public class Change {
 
     private String type;

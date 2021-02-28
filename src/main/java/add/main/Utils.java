@@ -8,13 +8,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by fermadeiral
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public class Utils {
     private static Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 

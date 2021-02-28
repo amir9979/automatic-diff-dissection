@@ -1,8 +1,5 @@
 package add.main;
 
-/**
- * Created by fermadeiral
- */
 public class Constants {
 
     public static final String LINE_BREAK = "\n";

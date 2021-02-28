@@ -1,8 +1,5 @@
 package add.utils;
 
-/**
- * Created by fermadeiral
- */
 public class BugInfo {
 
     private String bugId;

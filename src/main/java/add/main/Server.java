@@ -1,5 +1,12 @@
 package add.main;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
+
 import add.entities.FeatureList;
 import add.features.FeatureAnalyzer;
 import add.features.detector.repairactions.RepairActionDetector;
@@ -9,14 +16,6 @@ import fi.iki.elonen.NanoHTTPD;
 import gumtree.spoon.diff.Diff;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-/**
- * Created by tdurieux
- */
 public class Server extends NanoHTTPD {
 
     public Server() throws IOException {

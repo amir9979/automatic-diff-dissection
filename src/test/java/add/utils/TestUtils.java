@@ -2,9 +2,6 @@ package add.utils;
 
 import add.main.Config;
 
-/**
- * Created by fermadeiral
- */
 public class TestUtils {
 
     public static Config setupConfig(String bugId) {

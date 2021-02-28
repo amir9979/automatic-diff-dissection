@@ -1,15 +1,13 @@
 package add.entities;
 
-import add.main.Config;
-import add.main.Constants;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fermadeiral
- */
+import org.json.JSONObject;
+
+import add.main.Config;
+import add.main.Constants;
+
 public class FeatureList {
 
     private List<Feature> featureList;

@@ -18,9 +18,6 @@ import spoon.reflect.visitor.filter.LineFilter;
 
 import java.util.List;
 
-/**
- * Created by fermadeiral
- */
 public class RepairActionDetector extends EditScriptBasedDetector {
 
     private RepairActions repairActions;
